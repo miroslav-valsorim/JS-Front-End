@@ -1,0 +1,40 @@
+// input comes as
+//  const p = createElement('p', document.getElementById('preview-list'), 'My paragraph', ['story'], 'my-id', null)
+
+function createElement(type, parentNode, content, classes, id, attributes, useInnerHtml){
+    const htmlElement = document.createElement(type)
+
+    if (content &&useInnerHtml){
+      htmlElement.useInnerHtml = content;
+    }else{
+      if (content && type !== 'input'){
+        htmlElement.textContent = content;
+      }
+
+      if (content && type === 'input'){
+        htmlElement.value = content
+      }
+    }
+
+    if (classes && classes.length > 0){
+      htmlElement.classList.add(...classes);
+    }
+
+    if (id) {
+      htmlElement.id = id
+    }
+
+    // { src: 'link, href: 'http'}
+    // comes as object
+    if (attributes) {
+      for (const key in attributes){
+        htmlElement[key] = attributes[key]
+      }
+    }
+
+    if (parentNode){
+      parentNode.appendChild(htmlElement)
+    }
+
+    return htmlElement
+  }
